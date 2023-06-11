@@ -1,7 +1,7 @@
 package pen;
 
-import exception.EmptyRefillException;
-import exception.NonRefillableWithRefillException;
+import exceptions.EmptyRefillException;
+import exceptions.NonRefillableWithRefillException;
 import parts.Ink;
 import parts.Nib;
 import parts.Refill;
@@ -32,6 +32,6 @@ public class FountainPen extends Pen {
 
 	@Override
 	public void refillWithRefill(Refill refill) throws NonRefillableWithRefillException {
-		throw new NonRefillableWithRefillException();
+		throw new NonRefillableWithRefillException("Fountain Pen is not refillable with refill, try put some ink from ink pot.");
 	}
 }

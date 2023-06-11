@@ -1,8 +1,8 @@
 package pen;
 
-import exception.EmptyRefillException;
-import exception.IncompatibeRefillException;
-import exception.NonRefillableWithInkException;
+import exceptions.EmptyRefillException;
+import exceptions.IncompatibeRefillException;
+import exceptions.NonRefillableWithInkException;
 import parts.Ink;
 import parts.Refill;
 import parts.RefillableBehavior;
@@ -24,12 +24,12 @@ public class BallPen extends Pen implements RefillableBehavior {
 	
 	@Override
 	public void refillWithInk(Ink ink) throws NonRefillableWithInkException {
-		throw new NonRefillableWithInkException();
+		throw new NonRefillableWithInkException("Ball Pen is not refillable with ink, try to replace its refill.");
 	}
 
 	@Override
 	public void refillWithRefill(Refill refill) throws IncompatibeRefillException, EmptyRefillException {
-		if(this.refill.getNib().getDiameter() != refill.getNib().getDiameter()) throw new IncompatibeRefillException();
+		if(this.refill.getNib().getDiameter() != refill.getNib().getDiameter()) throw new IncompatibeRefillException("Nib diameter mismatch, refill with same diameter Nib");
 		System.out.print("Replacing with new refill, Color : ");
 		refill.getInk().write(refill.getNib(), "####");
 		this.refill = refill;

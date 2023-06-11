@@ -1,6 +1,6 @@
 package pen;
 
-import exception.EmptyRefillException;
+import exceptions.EmptyRefillException;
 import parts.RefillableBehavior;
 import strategy.WriteStrategy;
 

@@ -1,15 +1,14 @@
 package pen;
 
 import colors.Color;
-import exception.EmptyRefillException;
-import exception.IncompatibeRefillException;
-import exception.NonRefillableWithInkException;
-import exception.NonRefillableWithRefillException;
+import exceptions.EmptyRefillException;
+import exceptions.IncompatibeRefillException;
+import exceptions.NonRefillableWithInkException;
+import exceptions.NonRefillableWithRefillException;
 import parts.Ink;
 import parts.Nib;
 import parts.Refill;
 import strategy.TrimaxAddGelStrategy;
-import strategy.WriteStrategy;
 
 public class UseAndThrowPen extends Pen {
 
@@ -24,12 +23,12 @@ public class UseAndThrowPen extends Pen {
 	
 	@Override
 	public void refillWithInk(Ink ink) throws NonRefillableWithInkException, EmptyRefillException {
-		throw new NonRefillableWithInkException();
+		throw new NonRefillableWithInkException("Use n throw pens are not ment to refill with ink, throw this pen if you have consumed all its ink");
 	}
 
 	@Override
 	public void refillWithRefill(Refill refill) throws NonRefillableWithRefillException, IncompatibeRefillException {
-		throw new NonRefillableWithRefillException();
+		throw new NonRefillableWithRefillException("Use n throw pens are not ment to refill with another refill, throw this pen if you have consumed all its ink");
 		
 	}
 

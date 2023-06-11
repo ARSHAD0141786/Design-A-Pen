@@ -1,6 +1,6 @@
 package strategy;
 
-import exception.EmptyRefillException;
+import exceptions.EmptyRefillException;
 import parts.Ink;
 import parts.Nib;
 

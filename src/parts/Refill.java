@@ -1,6 +1,6 @@
 package parts;
 
-import exception.EmptyRefillException;
+import exceptions.EmptyRefillException;
 import strategy.WriteStrategy;
 
 public class Refill {

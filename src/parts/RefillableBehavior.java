@@ -1,9 +1,9 @@
 package parts;
 
-import exception.EmptyRefillException;
-import exception.IncompatibeRefillException;
-import exception.NonRefillableWithInkException;
-import exception.NonRefillableWithRefillException;
+import exceptions.EmptyRefillException;
+import exceptions.IncompatibeRefillException;
+import exceptions.NonRefillableWithInkException;
+import exceptions.NonRefillableWithRefillException;
 
 public interface RefillableBehavior {
 	public void refillWithInk(Ink ink) throws NonRefillableWithInkException, EmptyRefillException;
