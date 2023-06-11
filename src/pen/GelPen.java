@@ -1,38 +1,38 @@
 package pen;
 
-import colors.RedColor;
 import exception.EmptyRefillException;
+import exception.IncompatibeRefillException;
+import exception.NonRefillableWithInkException;
 import parts.Ink;
-import parts.Nib;
 import parts.Refill;
-import strategy.TrimaxStrategy;
+import strategy.TrimaxAddGelStrategy;
 import strategy.WriteStrategy;
 
 public class GelPen extends Pen {
 	WriteStrategy writeStrategy;
 	Refill refill;
 	
-	public GelPen() {
-		this.writeStrategy = new TrimaxStrategy();
-		this.refill = new Refill();
-		
-		Ink ink = new Ink();
-		ink.setColor(new RedColor());
-		this.refill.setInk(ink);
-		
-		Nib nib = new Nib();
-		nib.setInkConsumptionRate(this.writeStrategy.getConsumptionRate());
-		this.refill.setNib(nib);
+	public GelPen(Refill refill) {
+		this.writeStrategy = new TrimaxAddGelStrategy();
+		this.refill = refill;
 	}
 	
 	@Override
 	public void write(String text) throws EmptyRefillException {
-		System.out.println("Writing from Gel pen...");
-		refill.write(text);
+		refill.write(writeStrategy, text);
+	}
+	
+	@Override
+	public void refillWithInk(Ink ink) throws NonRefillableWithInkException {
+		throw new NonRefillableWithInkException();
 	}
 
 	@Override
-	public void refill() {
-		this.refill.refill();
+	public void refillWithRefill(Refill refill) throws IncompatibeRefillException, EmptyRefillException {
+		if(this.refill.getNib().getDiameter() != refill.getNib().getDiameter()) throw new IncompatibeRefillException();
+		System.out.print("Replacing with new refill, color : ");
+		refill.getInk().write(refill.getNib(), "####");
+		this.refill = refill;
 	}
+
 }

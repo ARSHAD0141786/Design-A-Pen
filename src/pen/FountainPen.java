@@ -1,47 +1,39 @@
 package pen;
 
-import colors.BlueColor;
 import exception.EmptyRefillException;
+import exception.NonRefillableWithRefillException;
 import parts.Ink;
 import parts.Nib;
-import parts.Refillable;
+import parts.Refill;
 import strategy.FountainPenStrategy;
 import strategy.WriteStrategy;
 
-public class FountainPen extends Pen implements Refillable {
-	WriteStrategy writeStrategy;
-	Ink ink;
-	Nib nib;
-	int capacity = 1000;
+public class FountainPen extends Pen {
 	
+	private WriteStrategy writeStrategy;
+	private Ink ink;
+	private Nib nib;
 	
-	public FountainPen() {
+	public FountainPen(Ink ink, Nib nib) {
 		this.writeStrategy = new FountainPenStrategy();
-		
-		ink = new Ink();
-		ink.setColor(new BlueColor());
-		
-		nib = new Nib();
-		nib.setInkConsumptionRate(this.writeStrategy.getConsumptionRate());
-
+		this.ink = ink;
+		this.nib = nib;
 	}
 	
 	@Override
 	public void write(String text) throws EmptyRefillException {
-		System.out.println("Writing from Fountain pen...");
-		// here we can remove space from text, for calculation
-		int requiredCapacity = this.nib.getInkConsumptionRate() * text.length();
-		if(capacity < requiredCapacity) throw new EmptyRefillException();
-		capacity -= requiredCapacity;
-		
-		this.ink.write(text);
-
+		writeStrategy.write(nib, ink, text);
+	}
+	
+	@Override
+	public void refillWithInk(Ink ink) throws EmptyRefillException {
+		System.out.print("Refilling with ink : ");
+		ink.write(this.nib, "####");
+		this.ink = ink;
 	}
 
 	@Override
-	public void refill() {
-		capacity += 100;
-		capacity = Math.min(capacity, 1000);
-		System.out.println("Refilling fountain pen from ink pot. Capacity : " + capacity);
+	public void refillWithRefill(Refill refill) throws NonRefillableWithRefillException {
+		throw new NonRefillableWithRefillException();
 	}
 }

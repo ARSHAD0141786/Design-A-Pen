@@ -1,38 +1,39 @@
 package pen;
 
-import colors.GreenColor;
 import exception.EmptyRefillException;
+import exception.IncompatibeRefillException;
+import exception.NonRefillableWithInkException;
 import parts.Ink;
-import parts.Nib;
 import parts.Refill;
+import parts.RefillableBehavior;
 import strategy.ButterFlowStrategy;
 import strategy.WriteStrategy;
 
-public class BallPen extends Pen {
+public class BallPen extends Pen implements RefillableBehavior {
 	WriteStrategy writeStrategy;
 	Refill refill;
 	
-	public BallPen() {
+	public BallPen(Refill refill) {
 		this.writeStrategy = new ButterFlowStrategy();
-		this.refill = new Refill();
-		
-		Ink ink = new Ink();
-		ink.setColor(new GreenColor());
-		this.refill.setInk(ink);
-		
-		Nib nib = new Nib();
-		nib.setInkConsumptionRate(this.writeStrategy.getConsumptionRate());
-		this.refill.setNib(nib);
+		this.refill = refill;
 	}
 	
 	@Override
 	public void write(String text) throws EmptyRefillException {
-		System.out.println("Writing from Ball pen...");
-		refill.write(text);
+		refill.write(writeStrategy, text);
 	}
 	
-	public void refill() {
-		this.refill.refill();
+	@Override
+	public void refillWithInk(Ink ink) throws NonRefillableWithInkException {
+		throw new NonRefillableWithInkException();
+	}
+
+	@Override
+	public void refillWithRefill(Refill refill) throws IncompatibeRefillException, EmptyRefillException {
+		if(this.refill.getNib().getDiameter() != refill.getNib().getDiameter()) throw new IncompatibeRefillException();
+		System.out.print("Replacing with new refill, Color : ");
+		refill.getInk().write(refill.getNib(), "####");
+		this.refill = refill;
 	}
 	
 }
