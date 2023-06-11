@@ -6,14 +6,12 @@ import exception.NonRefillableWithInkException;
 import parts.Ink;
 import parts.Refill;
 import strategy.TrimaxAddGelStrategy;
-import strategy.WriteStrategy;
 
 public class GelPen extends Pen {
-	WriteStrategy writeStrategy;
 	Refill refill;
 	
 	public GelPen(Refill refill) {
-		this.writeStrategy = new TrimaxAddGelStrategy();
+		super.writeStrategy = new TrimaxAddGelStrategy();
 		this.refill = refill;
 	}
 	

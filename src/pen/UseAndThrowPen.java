@@ -15,12 +15,11 @@ public class UseAndThrowPen extends Pen {
 
 	private Ink ink;
 	private Nib nib;
-	private WriteStrategy writeStrategy;
 	
 	public UseAndThrowPen(Color color) {
+		super.writeStrategy = new TrimaxAddGelStrategy();
 		this.ink = new Ink(color);
 		this.nib = new Nib(2, 1.2);
-		this.writeStrategy = new TrimaxAddGelStrategy();
 	}
 	
 	@Override

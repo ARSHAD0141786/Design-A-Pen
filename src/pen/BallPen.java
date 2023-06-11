@@ -7,14 +7,13 @@ import parts.Ink;
 import parts.Refill;
 import parts.RefillableBehavior;
 import strategy.ButterFlowStrategy;
-import strategy.WriteStrategy;
 
 public class BallPen extends Pen implements RefillableBehavior {
-	WriteStrategy writeStrategy;
+	
 	Refill refill;
 	
 	public BallPen(Refill refill) {
-		this.writeStrategy = new ButterFlowStrategy();
+		super.writeStrategy = new ButterFlowStrategy();
 		this.refill = refill;
 	}
 	
